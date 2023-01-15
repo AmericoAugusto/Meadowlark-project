@@ -4,12 +4,16 @@
   "description": "",
   "main": "meadowlark.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint meadowlark.js lib"
   },
   "author": "Américo Augusto",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
     "express-handlebars": "^6.0.6"
+  },
+  "devDependencies": {
+    "eslint": "^8.32.0"
   }
 }

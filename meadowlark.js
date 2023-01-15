@@ -1,5 +1,6 @@
 const express = require('express') // importando o express de node_modules
 const expressHandlebars = require('express-handlebars')
+// eslint-disable-next-line no-undef
 const port = process.env.PORT || 3000
 const app = express()
 const fortune = require('./lib/fortune')
@@ -18,6 +19,7 @@ app.get('/about', (req, res) => {
 })
 // get para adicionar rota. A função que eu forneci será chamada quando a rota for acionada
 
+// eslint-disable-next-line no-undef
 app.use(express.static(__dirname + '/public'))
 
 //página 404 personalizada
@@ -27,6 +29,7 @@ app.use((req, res) => {
     res.send('404 - not found')
 })
 // página 500 personalizada
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => { //middleware
     console.log(err.message)
     res.type('text/plain')
