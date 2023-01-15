@@ -2,6 +2,7 @@ const express = require('express') // importando o express de node_modules
 const expressHandlebars = require('express-handlebars')
 const port = process.env.PORT || 3000
 const app = express()
+const fortune = require('./lib/fortune')
 
 // configura o view engine handlebars
 app.engine('handlebars', expressHandlebars({
@@ -13,8 +14,7 @@ app.set('view engine', 'handlebars')
 app.get('/', (req,res) => res.render('home')) // get para adicionar rota. A função que eu forneci será chamada quando a rota for acionada
    
 app.get('/about', (req, res) => {
-    const randomFortune = fortunes[Math.floor(Math.random()*fortunes.lenght)]
-    res.render('about', { fortune: randomFortune })
+    res.render('about', { fortune: fortune.getFortune() })
 })
 // get para adicionar rota. A função que eu forneci será chamada quando a rota for acionada
 
@@ -34,13 +34,6 @@ app.use((err, req, res, next) => { //middleware
     res.send('500 - Server Error')
 })
 
-const fortunes = [
-    "Conquer your fears or they will conquer you.",
-    "Rivers need springs.",
-    "Do not fear what you dont't know.",
-    "You will have a pleasant surprise.",
-    "Whenever possible, keep it simples."
-]
 app.listen(port, () => console.log(
     `Express started on http://localhost:${port}; 
     press Ctrl + C to terminate.`
