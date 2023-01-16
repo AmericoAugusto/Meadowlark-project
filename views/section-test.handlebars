@@ -1,0 +1,16 @@
+{{#section 'head'}}
+	<!-- we want Google to ignore this page -->
+	<meta name="robots" content="noindex">
+{{/section}}
+
+<h1>Test Page</h1>
+<p>We're testing some script stuff.</p>
+
+{{#section 'scripts'}}
+	<script>
+   const div = document.createElement('div')
+   div.appendChild(document.createTextNode('(scripting works!)'))
+   document.querySelector('body').appendChild(div)
+   </script>
+
+{{/section}}
