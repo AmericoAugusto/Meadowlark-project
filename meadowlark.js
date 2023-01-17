@@ -8,6 +8,9 @@ const weatherMiddlware = require("./lib/middleware/weather");
 const { credentials } = require('./config');
 const cookieParser = require('cookie-parser')
 const expressSession = require("express-session")
+const flashMiddleware = require('./lib/middleware/flash')
+
+app.use(flashMiddleware)
 
 app.use(cookieParser(credentials.cookieSecret))
 app.use(expressSession({
