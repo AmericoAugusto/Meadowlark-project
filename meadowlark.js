@@ -5,6 +5,16 @@ const app = express();
 const handlers = require("./lib/handlers");
 const fortune = require("./lib/middleware/fortune");
 const weatherMiddlware = require("./lib/middleware/weather");
+const { credentials } = require('./config');
+const cookieParser = require('cookie-parser')
+const expressSession = require("express-session")
+
+app.use(cookieParser(credentials.cookieSecret))
+app.use(expressSession({
+  resave: false,
+  saveUninitialized: false,
+  secret: credentials.cookieSecret,
+}))
 
 // configure Handlebars view engine
 app.engine(
