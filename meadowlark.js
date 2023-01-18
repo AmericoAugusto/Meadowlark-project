@@ -9,7 +9,12 @@ const { credentials } = require('./config');
 const cookieParser = require('cookie-parser')
 const expressSession = require("express-session")
 const flashMiddleware = require('./lib/middleware/flash')
-const cartValidation = require('./lib/cartValidation')
+const cartValidation = require('./lib/cartValidation');
+const email = require("./lib/email");
+const emailService = require('./lib/email')(credentials)
+
+emailService.send(email, "Hood River tours on sale today!",
+"Get 'em while they're hot!")
 
 app.use(cartValidation.resetValidation)
 app.use(cartValidation.checkWaivers)
