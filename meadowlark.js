@@ -9,6 +9,11 @@ const { credentials } = require('./config');
 const cookieParser = require('cookie-parser')
 const expressSession = require("express-session")
 const flashMiddleware = require('./lib/middleware/flash')
+const cartValidation = require('./lib/cartValidation')
+
+app.use(cartValidation.resetValidation)
+app.use(cartValidation.checkWaivers)
+app.use(cartValidation.checkGuestCounts)
 
 app.use(flashMiddleware)
 
