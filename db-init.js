@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS vacations (
     requires_waiver boolean,
     maximum_guests integer,
     notes text,
-    packages_sold integer,
+    packages_sold integer
 );
 `
 
@@ -44,7 +44,7 @@ const seedVacations = async client => {
         requires_waiver,
         maximum_guests,
         notes,
-        packages_sold,
+        packages_sold
     ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
      `
      await client.query(sql, [
@@ -74,7 +74,7 @@ client.connect().then(async () => {
             await seedVacations(client)
         }
     } catch(err){
-        console.log('EROOR: could not initialize database')
+        console.log('ERROR: could not initialize database')
         console.log(err.message)
     } finally {
         client.end()
