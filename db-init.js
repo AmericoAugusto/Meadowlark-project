@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS vacations (
     sku varchar(50),
     description text,
     location_search varchar(100) NOT NULL,
-    location_lat diyble precision,
+    location_lat double precision,
     location_lgn double precision,
     price money,
     tags jsonb,
