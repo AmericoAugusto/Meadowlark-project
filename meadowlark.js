@@ -4,17 +4,12 @@ const bodyParser = require("body-parser");
 const app = express();
 const handlers = require("./lib/handlers");
 const fortune = require("./lib/middleware/fortune");
-const weatherMiddlware = require("./lib/middleware/weather");
+const { weatherMiddleware } = require ("./lib/middleware/weather");
 const { credentials } = require('./config');
 const cookieParser = require('cookie-parser')
 const expressSession = require("express-session")
 const flashMiddleware = require('./lib/middleware/flash')
 const cartValidation = require('./lib/cartValidation');
-const email = require("./lib/email");
-const emailService = require('./lib/email')(credentials)
-
-emailService.send(email, "Hood River tours on sale today!",
-"Get 'em while they're hot!")
 
 app.use(cartValidation.resetValidation)
 app.use(cartValidation.checkWaivers)
@@ -30,19 +25,19 @@ app.use(expressSession({
 }))
 
 // configure Handlebars view engine
-app.engine(
-  "handlebars",
-  expressHandlebars.engine({
-    defaultLayout: "main",
-    helpers: {
-      section: function (name, options) {
-        if (!this._sections) this._sections = {};
-        this._sections[name] = options.fn(this);
-        return null;
-      },
-    },
-  })
-);
+app.engine("handlebars", expressHandlebars.engine({
+  defaultLayout: "main",
+  helpers: {
+    section: function(name, options) {/*  only change here  */
+      if (!this._sections) {
+        this._sections = {};
+      }
+      this._sections[name] = options.fn(this);
+
+      return null;
+    }
+  }
+}));
 
 app.set("view engine", "handlebars");
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -51,7 +46,7 @@ app.use(bodyParser.json());
 const port = process.env.PORT || 3000;
 // eslint-disable-next-line no-undef
 app.use(express.static(__dirname + "/public"));
-app.use(weatherMiddlware);
+app.use(weatherMiddleware);
 
 app.get("/", (req, res) => res.render("home")); // get para adicionar rota. A função que eu forneci será chamada quando a rota for acionada
 
@@ -80,9 +75,5 @@ app.use((err, req, res, next) => {
   res.send("500 - Server Error");
 });
 
-app.listen(port, () =>
-  console.log(
-    `Express started on http://localhost:${port}; 
-    press Ctrl + C to terminate.`
-  )
-);
+app.listen(port, () => console.log(`Express started in ` + `${app.get('env')}
+ mode at http://localhost:${port} ` + `; press CTRL-C to terminate.`))
