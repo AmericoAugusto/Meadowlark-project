@@ -22,6 +22,11 @@ CREATE TABLE IF NOT EXISTS vacations (
     notes text,
     packages_sold integer
 );
+CREATE TABLE IF NOT EXISTS vacation_in_season_listeners (
+    email varchar(200) NOT NULL,
+    sku varchar(20) NOT NULL,
+    PRIMARY KEY (email, sku)
+  );
 `
 
 const getVacationCount = async client => {
@@ -80,4 +85,3 @@ client.connect().then(async () => {
         client.end()
     }
 })
-
