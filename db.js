@@ -19,6 +19,13 @@ module.exports = {
             }
             return vacation
         })
+    },
+    addVacationInSeasonListener: async (email, sku) => {
+        await pool.query(
+          'INSERT INTO vacation_in_season_listeners (email, sku) ' +
+          'VALUES ($1, $2) ' +
+          'ON CONFLICT DO NOTHING',
+          [email, sku]
+        )
+      },
     }
-}
-
