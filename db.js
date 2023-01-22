@@ -1,30 +1,24 @@
+const { Pool } = require('pg')
+const _ = require('lodash')
+const { credentials } = require('./config')
+const { connectionString } = credentials.postgres
+const pool = new Pool({connectionString})
+
 module.exports = {
-    getVacations: async (options = {}) => {
-        //simularemos alguns dados de férias
-        const vacations = [
-            {
-                name: 'Hood River Day Trip',
-                slug: 'hood-river-day-trip',
-                category: 'Day Trip',
-                sku: 'HR199',
-                description: 'Spend a day sailling on the Columbia and ' + 'enjoying craft beers in Hood River!',
-                location: {
-                    //usaremos essa parte para a geocodificação
-                    // posteriormente
-                    search: 'Hood Rifver, Oregon, USA',
+    getVacations: async () => {
+        const { rows } = await pool.query('SELECT * from VACATIONS')
+        return rows.map(row => {
+            const vacation = _.mapKeys(row, (v, k) => _.camelCase(k))
+            vacation.price = parseFloat(vacation.price.replace(/^\$/, ''))
+            vacation.location = {
+                search: vacation.locationSearch,
+                coordinates: {
+                    lat: vacation.locationLat,
+                    lng: vacation.locationLgn,
                 },
-                price: 99.95,
-                tags: ['day trip', 'hood river', 'sailling', 'windsurfind', 'breweries'],
-                inSeason: true,
-                maximumGuests: 16,
-                available: true,
-                packagesSold: 0,
             }
-        ]
-        // se a opção "available" for especificada, somente as
-        // férias correspondentes serão retornadas
-        if(options.available !== undefined)
-        return vacations.filter(({available}) => available === options.available)
-        return vacations 
+            return vacation
+        })
     }
 }
+
