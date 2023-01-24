@@ -10,6 +10,7 @@ const cookieParser = require('cookie-parser')
 const expressSession = require("express-session")
 const flashMiddleware = require('./lib/middleware/flash')
 const cartValidation = require('./lib/cartValidation');
+const RedisStore = require('connect-redis')(expressSession)
 
 app.use(cartValidation.resetValidation)
 app.use(cartValidation.checkWaivers)
@@ -22,7 +23,12 @@ app.use(expressSession({
   resave: false,
   saveUninitialized: false,
   secret: credentials.cookieSecret,
+  store: new RedisStore({
+    url: credentials.redis.url,
+    logErrors: true, // altamente recomendado
+  })
 }))
+
 
 // configure Handlebars view engine
 app.engine("handlebars", expressHandlebars.engine({
