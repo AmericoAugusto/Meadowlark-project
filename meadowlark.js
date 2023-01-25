@@ -11,6 +11,7 @@ const expressSession = require("express-session")
 const flashMiddleware = require('./lib/middleware/flash')
 const cartValidation = require('./lib/cartValidation');
 const RedisStore = require('connect-redis')(expressSession)
+require('./routes')(app)
 
 app.use(cartValidation.resetValidation)
 app.use(cartValidation.checkWaivers)
@@ -54,16 +55,10 @@ const port = process.env.PORT || 3000;
 app.use(express.static(__dirname + "/public"));
 app.use(weatherMiddleware);
 
-app.get("/", (req, res) => res.render("home")); // get para adicionar rota. A função que eu forneci será chamada quando a rota for acionada
-app.get('/set-currency/:currency', handlers.setCurrency);
-// fetch/JSON formulário
-app.get("/newsletter", handlers.newsletter);
+
 app.post("/api/newsletter-singup", handlers.api.newsletterSingup);
 
-app.get("/about", (req, res) => {
-  res.render("about", { fortune: fortune.getFortune() });
-});
-// get para adicionar rota. A função que eu forneci será chamada quando a rota for acionada
+
 
 //página 404 personalizada
 app.use((req, res) => {
