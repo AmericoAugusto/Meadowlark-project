@@ -12,6 +12,15 @@ const flashMiddleware = require('./lib/middleware/flash')
 const cartValidation = require('./lib/cartValidation');
 const RedisStore = require('connect-redis')(expressSession)
 require('./routes')(app)
+const cors = require('cors')
+
+
+app.get('/api/vacations', handlers.getVacationsApi)
+app.get('api/vacation/:sku', handlers.getVacationsBySkuApi)
+app.post('/api/vacations/:sku/notify-qhen-in-season',
+handlers.addVacationsInSeasonListenerApi)
+app.delete('/api/vacation/:sku', handlers.requestDeleteVacationApi)
+app.use('/api',cors())
 
 app.use(cartValidation.resetValidation)
 app.use(cartValidation.checkWaivers)
