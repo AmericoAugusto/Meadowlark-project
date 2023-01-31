@@ -6,6 +6,7 @@ import { BrowserRouter,
         Route,
       Link } from 'react-router-dom'
 import { Router } from 'express';
+import Vacations from './vacations';
 
 
 function Home() {
@@ -35,6 +36,7 @@ function App() {
         <Route path="/" exact component={Home} />
         <Route path="/about" exact component={About} />
         <Route  component={NotFound} />
+        <Route path='/vacations' exact component={Vacations} />
       </Switch>
       <Home />
     </div>
