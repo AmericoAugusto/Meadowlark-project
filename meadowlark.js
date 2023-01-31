@@ -3,14 +3,14 @@ const expressHandlebars = require("express-handlebars");
 const bodyParser = require("body-parser");
 const app = express();
 const handlers = require("./lib/handlers");
-const fortune = require("./lib/middleware/fortune");
+
 const { weatherMiddleware } = require ("./lib/middleware/weather");
 const { credentials } = require('./config');
-const cookieParser = require('cookie-parser')
-const expressSession = require("express-session")
+
+
 const flashMiddleware = require('./lib/middleware/flash')
 const cartValidation = require('./lib/cartValidation');
-const RedisStore = require('connect-redis')(expressSession)
+
 require('./routes')(app)
 const cors = require('cors')
 
@@ -28,16 +28,6 @@ app.use(cartValidation.checkGuestCounts)
 
 app.use(flashMiddleware)
 
-app.use(cookieParser(credentials.cookieSecret))
-app.use(expressSession({
-  resave: false,
-  saveUninitialized: false,
-  secret: credentials.cookieSecret,
-  store: new RedisStore({
-    url: credentials.redis.url,
-    logErrors: true, // altamente recomendado
-  })
-}))
 
 
 // configure Handlebars view engine
