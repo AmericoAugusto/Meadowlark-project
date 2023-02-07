@@ -2,7 +2,7 @@ import logo from '../src/img/logo.png';
 import './App.css';
 import React from 'react';
 import { BrowserRouter as Router,
-          Switch,
+          Routes,
         Route,
         Link
       } from 'react-router-dom'
@@ -33,12 +33,12 @@ function App() {
         <h1>Meadowlark Travel</h1>
         <Link to="/"><img src={logo} alt='Meadowlark Travel Logo' /></Link> 
       </header>
-      <Switch>
+      <Routes>
         <Route path="/" exact component={Home} />
         <Route path="/about" exact component={About} />
         <Route  component={NotFound} />
         <Route path='/vacations' exact component={Vacations} />
-      </Switch>
+      </Routes>
       <Home />
     </div>
     </Router>
