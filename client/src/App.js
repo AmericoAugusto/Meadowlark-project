@@ -1,12 +1,13 @@
 import logo from '../src/img/logo.png';
 import './App.css';
 import React from 'react';
-import { BrowserRouter,
+import { BrowserRouter as Router,
           Switch,
         Route,
-      Link } from 'react-router-dom'
-import { Router } from 'express';
-import Vacations from './vacations';
+        Link
+      } from 'react-router-dom'
+import Vacations from './components/Vacations';
+
 
 
 function Home() {
